@@ -88,6 +88,23 @@ function App() {
     return buttons
   }
 
+
+  // Cambia tu handleClick para aceptar un Pokémon
+const handleClick = async (pokemon) => {
+  const permission = await Notification.requestPermission();
+  if (permission !== "granted") {
+    alert("Permiso denegado para notificaciones");
+    return;
+  }
+
+  const registration = await navigator.serviceWorker.ready;
+  registration.showNotification(`¡Has encontrado a ${pokemon.name}!`, {
+    body: `¡${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} apareció!`,
+    icon: pokemon.image // aquí usamos la imagen oficial del Pokémon
+  });
+};
+
+
   return (
     <div className="app">
       <h1 className="title">
@@ -95,7 +112,7 @@ function App() {
         Pokédex
       </h1>
 
-      <NotificationButton/>
+      {/* <NotificationButton/> */}
 
       {/* Paginador Superior */}
       <div className="pagination-controls top">
@@ -130,9 +147,14 @@ function App() {
         ) : (
           pokemonList.map((p) => (
             <div
+            
               key={p.id}
               className={`card ${p.types[0]}`} // Añadir el tipo principal como clase
-              onClick={() => setSelectedPokemon(p)}
+              onClick={() => {
+  setSelectedPokemon(p);
+  handleClick(p);
+}}
+
             >
               <p className="card-id">#{String(p.id).padStart(3, '0')}</p>
               <img src={p.image} alt={p.name} className="card-img" />
