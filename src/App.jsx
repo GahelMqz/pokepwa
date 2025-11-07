@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import NotificationButton from "./components/NotificationButton"
 
 // Define el límite de Pokémon por página
 const POKEMON_PER_PAGE = 12 
@@ -93,6 +94,8 @@ function App() {
         <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg" alt="Pokémon Logo" className="logo-img" />
         Pokédex
       </h1>
+
+      <NotificationButton/>
 
       {/* Paginador Superior */}
       <div className="pagination-controls top">
